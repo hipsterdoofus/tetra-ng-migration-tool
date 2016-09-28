@@ -1,0 +1,336 @@
+/*  Top bar */
+.migrationMenu {
+    align-items: center;
+    background-color: #f2f2f2;
+    box-shadow: 0 2px 5px #999;
+    display: flex;
+    height: 4rem;
+    left: 50%;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    transform: translateX(-50%);
+    width: 940px;
+    z-index: 9990;
+}
+
+.migrationMenu img {
+    background-image: url(chrome-extension://__MSG_@@extension_id__/CDK_Logo_Horiz.png);
+    background-position: 0 center;
+    background-repeat: no-repeat;
+    height: 55px;
+    margin-left: -20px;
+    width: 269px;
+}
+
+.migrationMenu h2 {
+    flex-grow: 2;
+    font-style: normal;
+    padding: 1rem 25px;
+    text-transform: none;
+}
+
+.migrationMenu button { /* !important to override tetra styles */
+    background-color: #fff;
+    background-image: none!important;
+    border: 1px solid #09f;
+    border-radius: 5px;
+    color: #09f!important;
+    height: 2rem;
+    line-height: 0;
+    margin-right: 20px;
+    padding: 1rem 1.5rem;
+    position: relative;
+}
+
+.migrationMenu button:disabled {
+    border-color: #999;
+    color: #999!important;
+    cursor: initial;
+}
+
+.migrationMenu button:hover {
+    background-color: #09f;
+    color: #fff!important;
+}
+
+.migrationMenu button:disabled:hover {
+    background-color: #fff;
+    border-color: #999;
+    color: #999!important;
+}
+
+.migrationMenu button:last-child {
+    margin-right: 0;
+}
+
+.migrationMenu button[name=addMigration]:before {
+    content: '+';
+}
+
+.migrationMenu button[name=viewMigration]:after{
+    background-color: #09f;
+    border-radius: 1rem;
+    color: #fff;
+    content: attr(data-count);
+    height: 1rem;
+    line-height: 1;
+    position: absolute;
+    right: -0.5rem;
+    top: -0.5rem;
+    width: 1rem;
+}
+
+.migrationMenu button[name=viewMigration]:disabled:after {
+    background-color: #999;
+}
+
+/* Modal Sneezeguard */
+.sneezeguard {
+    background-color: rgba(16,16,16,0.2);
+    display: none;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+}
+
+.sneezeguard.active {
+    display: block;
+}
+
+.sneezeguard .migrationAddRecord {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px #666;
+    position: relative;
+    height: 50vh;
+    margin: auto;
+    width: 50vw;
+}
+
+/* Modal to add Record */
+.migrationAddRecord h2 {
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #999;
+    border-radius: 10px 10px 0 0;
+    font-style: normal;
+    padding: 1rem 20px;
+    text-transform: none;
+}
+
+.migrationAddRecord h3 {
+    font-style: normal;
+    margin: 0;
+    padding: 1rem 25px;
+    text-transform: none;
+}
+
+.migrationAddRecord section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 25px;
+}
+
+.migrationAddRecord fieldset {
+    border: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.migrationAddRecord fieldset input {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.0075);
+    box-sizing: border-box;
+    display: block;
+    height: 30px;
+    margin-bottom: 10px;
+    padding: 4px 6px;
+    transition: border linear .2s, box-shadow linear .2s;
+    vertical-align: middle;
+}
+
+.migrationAddRecord label.toggle {
+    display: inline-block;
+    flex: 0 1 8rem;
+    height: 1rem;
+    line-height: 1rem;
+    margin-bottom: 10px;
+    padding: .5rem 0;
+    text-align: center;
+    width: 10rem;
+}
+
+.migrationAddRecord label.toggle input {
+    border: 1px solid #0f9;
+    border-radius: 5px;
+    display: none;
+    width: 50px;
+}
+
+.migrationAddRecord button,
+.migrationAddRecord label.toggle {
+    background-color: #fff;
+    background-image: none!important;
+    border: 1px solid #09f;
+    border-radius: 5px;
+    color: #09f!important; /* !important to override tetra styles */
+    margin-right: 10px;
+}
+
+.migrationAddRecord button:hover,
+.migrationAddRecord label.toggle:hover,
+.migrationAddRecord label.toggle.selected {
+    background-color: #09f;
+    color: #fff!important;
+}
+
+.migrationAddRecord button:last-child {
+    margin-right: 0;
+}
+
+.migrationAddRecord footer {
+    background-color: #f2f2f2;
+    border-radius: 0 0 10px 10px;
+    border-top: 1px solid #ccc;
+    bottom: 0;
+    display: flex;
+    flex: 1 1 auto;
+    font-style: normal;
+    justify-content: flex-end;
+    padding: 1rem 25px;
+    position: absolute;
+    text-align: right;
+    text-transform: none;
+    width: calc(100% - 50px);
+}
+
+/* Drawer for form */
+.migrationDrawer {
+    background-color: #fff;
+    box-shadow: 0 2px 5px #999;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0 auto;
+    overflow-y: auto;
+    padding: 0 20px 50px;
+    position: fixed;
+    right: -350px;
+    top: 0;
+    width: 310px;
+    z-index: 9995;
+}
+
+.migrationDrawer.open {
+    right: 0;
+    transition: right 500ms;
+}
+
+.migrationDrawer h2 {
+    font-style: normal;
+    text-align: center;
+    text-transform: none;
+}
+
+.migrationDrawer h3 {
+    color: #222;
+    font-size: 1.17em;
+    font-weight: bold;
+    margin: 0 0 7px;
+}
+
+.migrationDrawer div[cms-link-selector-],
+.migrationDrawer div[base-editable] label,
+.migrationDrawer div[base-editable-controls],
+.migrationDrawer div[template=cmsDateTime],
+.migrationDrawer div[template=cmsTags],
+.migrationDrawer .tool-box {
+    display: none;
+}
+
+.migrationDrawer select,
+.migrationDrawer textarea,
+.migrationDrawer input:not([type="checkbox"]):not([type="radio"]),
+.migrationDrawer .uneditable-input, [contenteditable] {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.0075);
+    box-sizing: border-box;
+    display: block;
+    height: 30px;
+    margin-bottom: 10px;
+    padding: 4px 6px;
+    transition: border linear .2s, box-shadow linear .2s;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.migrationDrawer select:focus,
+.migrationDrawer textarea:focus,
+.migrationDrawer input:not([type="checkbox"]):not([type="radio"]):focus,
+.migrationDrawer .uneditable-input, [contenteditable]:focus {
+    border-color: rgba(82,168,236,0.8);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.0075), 0 0 8px rgba(82,168,236,0.6);
+    outline: 0;
+}
+
+.migrationDrawer textarea {
+
+    height: 100px;
+    overflow-y: hidden;
+}
+
+.migrationDrawer .form-control .cms-btn,
+.migrationDrawer .form-control input.cms-btn {
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #05abf2;
+    border-radius: 0;
+    color: #05abf2;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 15px;
+    min-width: 100px;
+    padding: 3px 0;
+    text-align: center;
+    transition: all 0.3s;
+    vertical-align: top;
+    width: auto;
+}
+
+.migrationDrawer .form-control .cms-btn:hover,
+.migrationDrawer .form-control input.cms-btn:hover {
+    transform: scale(1.1);
+}
+
+.migrationDrawer .form-control .cms-btn.primary,
+.migrationDrawer .form-control input.cms-btn.primary {
+    background-color: #05abf2;
+    color: #fff;
+}
+
+
+/*.migrationDrawer .scratch {
+    border: 1px solid #f90;
+    min-height: 100px;
+    width: 100%;
+}
+
+.migrationDrawer iframe {
+    height: 100%;
+    width: 100%;
+}*/
+
+.migrationDrawer .cmsheader,
+.migrationDrawer .header-sidebar {
+    display: none;
+}
