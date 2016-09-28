@@ -4,12 +4,11 @@
 
     "name": "Tetra -> Next Gen Migration Extension",
     "description": "Tool to assist in migration of content from CDK Tetra sites to Next Gen sites",
-    "version": "0.1",
+    "version": "0.2",
     "browser_action": {
         "default_icon": "icon.png",
         "default_title": "Next Gen Migration Tool"
     },
-    /* TODO: look into pageAction to constrain where scripting shows up - https://developer.chrome.com/extensions/pageAction */
     "background": {
         "scripts": [
             "popup.js"

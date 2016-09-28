@@ -6,9 +6,8 @@ function NGMigrator(document) {
 
 NGMigrator.prototype.init = function init() {
     var me = this;
-    /*
-     On load - Set up UI
-     *********************************************************** */
+    /* On load - Set up UI
+     ----------------------------------------------------- */
     if(!this.isRendered()) {
         this.render();
 
@@ -42,7 +41,7 @@ NGMigrator.prototype.disable = function disable() {
 };
 
 NGMigrator.prototype.render = function createExtensionUi() {
-    var body = document.getElementsByTagName('body')[0];
+    var body = this.page.getElementsByTagName('body')[0];
 
     var uiContainer = document.createElement('div');
     uiContainer.className = 'migrationContainer';
@@ -131,7 +130,6 @@ NGMigrator.prototype.createMenuBar = function createMenuBar() {
     btnViewRecord.setAttribute('name', 'viewMigration');
     btnViewRecord.setAttribute('disabled', true);
     btnViewRecord.setAttribute('data-count', '0');
-    btnAddRecord.addEventListener('click', openModalHandler);
 
     menu.appendChild(logo);
     menu.appendChild(header);
@@ -154,11 +152,11 @@ NGMigrator.prototype.createDrawer = function createDrawer() {
     return menu;
 };
 
-// Async request to get Content Types
-// Populates the Add Record modal (.migrationAddRecord)
+/* Modal to add RecordAsync request to get Content Types
+   Populates the Add Record modal (.migrationAddRecord)
+   ----------------------------------------------------- */
 NGMigrator.prototype.getContentTypes = function getContentTypes() {
     var me = this;
-    // http://hydra.dit-ord.cobalt.com/hydrawebsitespackage/route/base-view/cmsMigrationTool
     var types = {};
     var target = document.querySelector('.migrationAddRecord section');
 
@@ -216,7 +214,7 @@ NGMigrator.prototype.renderContextTypes = function renderContextTypes(options, c
 
 /*
  UI Handler Methods
- *********************************************************** */
+ ----------------------------------------------------- */
 NGMigrator.prototype.chkBoxHandler = function chkBoxHandler(e) {
     var chk = e.target;
     var label = chk.parentNode;
@@ -233,13 +231,36 @@ NGMigrator.prototype.chkBoxHandler = function chkBoxHandler(e) {
 function attachFormHandlers() {
     var fields = document.querySelectorAll('.migrationDrawer input[base-editable-field], .migrationDrawer textarea[base-editable-field]');
 
+    // Adding a drag handler to document to store which item is being dragged
+    // Will be used by drawer form elements to append non-text properties to inputs
+    document.addEventListener('dragstart', function(e) {
+        nextGenMigrator.dragged = e.target;
+    });
+
     for(var i= 0, l=fields.length; i<l; i++) {
-        fields[i].addEventListener('focus', selectPropertyHandler);
+        fields[i].addEventListener('drop', formFieldDropHandler);
+        fields[i].addEventListener('focus', formFieldFocusHandler);
     }
 }
 
 // Handler for form elements
-function selectPropertyHandler(e) {
+function formFieldDropHandler(e) {
+    var dragged = nextGenMigrator.dragged;
+    var target = e.target;
+    var migrationContent = '';
+
+    if (dragged.nodeType === 1) {
+        if (dragged.tagName.toLowerCase() == 'img') {
+            migrationContent = dragged.attributes['src'].value;
+        }
+        if (dragged.tagName.toLowerCase() == 'a') {
+            migrationContent = dragged.attributes['href'].value;
+        }
+        populateField(migrationContent, target);
+    }
+}
+
+function formFieldFocusHandler(e) {
     var el = e.target;
     var migrationContent = getSelectedText();
 
@@ -273,14 +294,19 @@ function populateField(value, target) {
     var selectedVal = value;
 
     if (selectedVal.length > 0) {
-        target.value = selectedVal;
+        target.value += selectedVal;
     }
 }
 
 function buildUrl(id) {
     var host = 'http://hydra.dit-ord.cobalt.com/hydrawebsitespackage/'; //'http://localhost:3000/'; //
     var route = 'route/base-view/contentEditor';
-    var webId = 'gmps-hydra04'
+    var webId = 'gmps-hydra04';
+    /*var query = {
+        modelId: id,
+        formType: 'fragment'
+    };*/
+
     var query = '?modelId=' + id + '&configCtx={%22webId%22:%22' + webId + '%22,%22locale%22:%22en_US%22,%22version%22:%22WIP%22,%22page%22:%22VehicleDetails%22}&formType=fragment'
 
     return host + route + query;
@@ -292,11 +318,6 @@ function submitRequest(recordTypes) {
     var url = buildUrl(id);
 
     if (newRecords) {
-        // - Build URL – include schema id
-        // - Make AJAX call to URL for form
-        // - Create handler function (onSuccess) to process returned form and append to drawer
-        // - On paint of drawer, show in window.
-
         var request = new XMLHttpRequest();
         request.responseType = 'document';
         request.open('GET', url, true);

@@ -1,4 +1,5 @@
-/*  Top bar */
+/*  Top bar
+   ----------------------------------------------------- */
 .migrationMenu {
     align-items: center;
     background-color: #f2f2f2;
@@ -86,7 +87,8 @@
     background-color: #999;
 }
 
-/* Modal Sneezeguard */
+/* Modal Sneezeguard
+   ----------------------------------------------------- */
 .sneezeguard {
     background-color: rgba(16,16,16,0.2);
     display: none;
@@ -102,6 +104,8 @@
     display: block;
 }
 
+/* Modal to add Record
+   ----------------------------------------------------- */
 .sneezeguard .migrationAddRecord {
     background-color: #fff;
     border-radius: 10px;
@@ -112,7 +116,6 @@
     width: 50vw;
 }
 
-/* Modal to add Record */
 .migrationAddRecord h2 {
     background-color: #f2f2f2;
     border-bottom: 1px solid #999;
@@ -212,7 +215,8 @@
     width: calc(100% - 50px);
 }
 
-/* Drawer for form */
+/* Drawer for form
+   ----------------------------------------------------- */
 .migrationDrawer {
     background-color: #fff;
     box-shadow: 0 2px 5px #999;
@@ -284,7 +288,6 @@
 }
 
 .migrationDrawer textarea {
-
     height: 100px;
     overflow-y: hidden;
 }
@@ -317,18 +320,6 @@
     background-color: #05abf2;
     color: #fff;
 }
-
-
-/*.migrationDrawer .scratch {
-    border: 1px solid #f90;
-    min-height: 100px;
-    width: 100%;
-}
-
-.migrationDrawer iframe {
-    height: 100%;
-    width: 100%;
-}*/
 
 .migrationDrawer .cmsheader,
 .migrationDrawer .header-sidebar {
